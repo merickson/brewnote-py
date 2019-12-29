@@ -153,6 +153,15 @@ class FermentationYeast(models.Model):
     yeast = models.ForeignKey(YeastPacket, on_delete=models.PROTECT)
     amount = models.FloatField()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['fermentation', 'yeast'],
+                name='one_yeast_per_fermentation',
+            ),
+        ]
+        
+
 class FermentationAdditive(models.Model):
     fermentation = models.ForeignKey(Fermentation, on_delete=models.PROTECT)
     additive = models.ForeignKey(Additive, on_delete=models.PROTECT)

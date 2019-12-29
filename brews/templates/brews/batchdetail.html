@@ -7,6 +7,7 @@
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <h2>Batch number: {{ batch.num }}</h2>
 
+    <a href="{% url 'addfermentation' batch.id %}">Add a new fermentation to this batch!</a>
     {% if fermentations %}
     {% for f in fermentations %}
     <h3>Fermentation starting {{ f.startdate }}</h3>

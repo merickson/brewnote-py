@@ -7,10 +7,9 @@
 
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-    <form action="{% url 'newbatch' %}" method="post">
+    <form action="{% url 'addbatch' %}" method="post">
       {% csrf_token %}
-      Name: <input type="text" name="batch-name" id="batch-name"><br/>
-      Batch number: <input type="text" name="batch-num" id="batch-num"><br/>
+      {{ form }}
       <input type="submit" value="Create Batch">
     </form>
   </body>

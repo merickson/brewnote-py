@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from .models import Batch, Fermentation
+from .forms import BatchForm, FermentationForm
 
 def index(request):
     batches = Batch.objects.order_by('num')
@@ -21,13 +22,31 @@ def brewdetail(request, brew_id):
     return render(request, 'brews/batchdetail.html', ctx)
 
 def addbatch(request):
-    return render(request, 'brews/addbatch.html', {})
+    if request.method == "POST":
+        form = BatchForm(request.POST)
+        if form.is_valid():
+            batch = form.save()
+                
+            return HttpResponseRedirect(reverse('brewdetail', args=(batch.id,)))
 
-def newbatch(request):
-    batch = Batch.objects.create(
-        name=request.POST['batch-name'],
-        num=request.POST['batch-num'],
-    )
+    else:
+        form = BatchForm()
+        
+    return render(request, 'brews/addbatch.html', {'form': form})
 
-    return HttpResponseRedirect(reverse('brewdetail', args=(batch.id,)))
+def addfermentation(request, brew_id):
+    batch = get_object_or_404(Batch, pk=brew_id)
+    if request.method == "POST":
+        form = FermentationForm(request.POST)
+        if form.is_valid():
+            ferm = form.save(commit=False)
+            ferm.batch = batch
+            ferm.save()
 
+            return HttpResponseRedirect(reverse('brewdetail', args=(batch.id,)))
+
+    else:
+        form = FermentationForm()
+
+    return render(request, 'brews/addfermentation.html', {'batch': batch, 'form': form})
+        
