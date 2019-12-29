@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>BOSWORTH BREWNOTE</title>
+  </head>
+  <body>
+    <h1>BOSWORTH BREWNOTE</h1>
+    <p><a href="{%url 'addbatch' %}">Add a new batch!</a></p>
+    {% if batch_list %}
+    <ul>
+      {% for batch in batch_list %}
+      <li><a href="{% url 'brewdetail' batch.id %}">{{ batch.name }}</a></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No batches are available.</p>
+    {% endif %}
+  </body>
+</html>

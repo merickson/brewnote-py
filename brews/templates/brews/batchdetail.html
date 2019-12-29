@@ -1,0 +1,21 @@
+<html>
+  <head>
+  <title>Batch detail</title>
+  </head>
+  <body>
+    <h1>{{ batch.name }}</h1>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <h2>Batch number: {{ batch.num }}</h2>
+
+    {% if fermentations %}
+    {% for f in fermentations %}
+    <h3>Fermentation starting {{ f.startdate }}</h3>
+    <ul>
+      <li>Period: {{ f.startdate }} to {{ f.enddate }}</li>
+    </ul>
+    {% endfor %}
+    {% else %}
+    <p>No fermentations for this batch yet!</p>
+    {% endif %}
+  </body>
+</html>

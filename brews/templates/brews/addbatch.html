@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Add a batch</title>
+  </head>
+  <body>
+    <h1>Add a batch!</h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'newbatch' %}" method="post">
+      {% csrf_token %}
+      Name: <input type="text" name="batch-name" id="batch-name"><br/>
+      Batch number: <input type="text" name="batch-num" id="batch-num"><br/>
+      <input type="submit" value="Create Batch">
+    </form>
+  </body>
+</html>
